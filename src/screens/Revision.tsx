@@ -2,7 +2,7 @@ import { CalendarCheck, Check, History, LayoutTemplate, ListTodo, Search } from 
 import { useMemo, useState } from 'react';
 import { Markdown } from '../components/Markdown';
 import { Badge, Btn, Card, CardHeader, cx, Empty, PageTitle, Reveal, safeUrl, Stars, statusDot, type Tone } from '../components/ui';
-import { dayInfo, fmtDate, MONTH_SHEETS, resolveDay, weekDays } from '../lib/schedule';
+import { dayInfo, fmtDate, FRIDAY_CHECKS, MONTH_SHEETS, resolveDay, weekDays } from '../lib/schedule';
 import { type QueueReason, revisionQueue } from '../lib/selectors';
 import { useStore } from '../lib/store';
 
@@ -100,7 +100,7 @@ export function Revision() {
         <Card>
           <CardHeader icon={<CalendarCheck size={15} />} title={`Friday Revision Checklist · Week ${curWeek}`} sub={`Revision day: ${fmtDate(cal.dates[friday - 1])}`} right={<a href={`#/day/${friday}`} className="text-xs font-medium text-violet-600 dark:text-violet-400">Open Friday →</a>} />
           <div className="space-y-1.5 p-4">
-            {['Answer all 4 of this week’s cold-recall questions from memory', 'Re-solve 2 tricky problems cold (incl. the week’s coding question)', 'Clear the low-confidence & blocker queue'].map((t, i) => (
+            {FRIDAY_CHECKS.map((t, i) => (
               <label key={i} className="flex cursor-pointer items-start gap-2.5 rounded-lg border border-zinc-200 p-2.5 text-sm dark:border-zinc-800">
                 <input
                   type="checkbox"

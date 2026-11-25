@@ -1,6 +1,6 @@
 import { ArrowRight, ArrowUpRight, ChevronDown, Library } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { SLOT_HINT, WeekDayBar } from '../components/DayView';
+import { RefLinks, SLOT_HINT, WeekDayBar } from '../components/DayView';
 import { Badge, Card, cx, PageTitle, Progress, ResourceRow, statusDot, TrackBadge } from '../components/ui';
 import { PHASES, WEEKS } from '../data/curriculum';
 import { RES } from '../data/resources';
@@ -234,6 +234,7 @@ function DaySummary({ n, compact }: { n: number; compact?: boolean }) {
           Open day & logbook <ArrowRight size={12} />
         </a>
       </div>
+      {!compact && <RefLinks ids={info.refs} className="mt-1.5" />}
     </div>
   );
 }

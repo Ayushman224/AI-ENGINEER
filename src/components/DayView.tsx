@@ -8,7 +8,7 @@ import { TRACKS } from '../data/tracks';
 import type { QA } from '../data/types';
 import { mentorReport } from '../lib/report';
 import { go } from '../lib/router';
-import { dayInfo, fmtDate, TOTAL_DAYS, weekDays } from '../lib/schedule';
+import { dayInfo, fmtDate, FRIDAY_CHECKS, TOTAL_DAYS, weekDays } from '../lib/schedule';
 import { revisionQueue } from '../lib/selectors';
 import { emptyLog } from '../lib/state';
 import { useStore } from '../lib/store';
@@ -182,6 +182,7 @@ function DayCard({ n, isToday }: { n: number; isToday?: boolean }) {
           <div className="mt-4">
             <Label hint="opens in a new tab">Primary resource</Label>
             {RES[info.res[0]] && <ResourceRow r={RES[info.res[0]]} label="Open Resource" />}
+            <RefLinks ids={info.refs} />
           </div>
         )}
 
@@ -217,11 +218,7 @@ function FridayPlan({ n }: { n: number }) {
   const w = info.week;
   const checks = state.fridayChecks[w.n] ?? [false, false, false];
   const queue = revisionQueue(state, today);
-  const items = [
-    'Answer this week’s 4 cold-recall questions from memory',
-    'Re-solve the 2 tricky problems above cold, without notes',
-    `Clear the low-confidence & blocker queue (${queue.filter((q) => q.reason === 'low_conf' || q.reason === 'blocker').length} items)`,
-  ];
+  const items = [FRIDAY_CHECKS[0], FRIDAY_CHECKS[1], `${FRIDAY_CHECKS[2]} (${queue.filter((q) => q.reason === 'low_conf' || q.reason === 'blocker').length} items)`];
   return (
     <div className="mt-4 space-y-3">
       <Block icon={<BookOpen size={14} />} title="Concept / Review (first 15 min)">
@@ -535,5 +532,24 @@ function Logbook({ n }: { n: number }) {
         )}
       </div>
     </Card>
+  );
+}
+
+/** Small text links for resources the day's task text names (not extra buttons). */
+export function RefLinks({ ids, className }: { ids: string[]; className?: string }) {
+  const list = ids.filter((id) => RES[id]);
+  if (!list.length) return null;
+  return (
+    <p className={cx('mt-2 text-xs leading-relaxed text-zinc-500', className)}>
+      Named in the task:{' '}
+      {list.map((id, i) => (
+        <span key={id}>
+          {i > 0 && ' · '}
+          <a href={RES[id].url} target="_blank" rel="noopener noreferrer" className="underline decoration-zinc-400/60 underline-offset-2 hover:text-violet-500">
+            {RES[id].title} ↗
+          </a>
+        </span>
+      ))}
+    </p>
   );
 }

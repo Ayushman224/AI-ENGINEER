@@ -21,6 +21,7 @@ export interface DayInfo {
   track: DayBadge; // the single active badge for this day
   title: string;
   res: string[]; // exactly ONE primary resource for this day (see data/primary.ts)
+  refs: string[]; // other resources the day's task text names (shown as small text links)
   concept: string; // concept / reading step
   practice: string; // hands-on coding / build step
   tip: DayTip; // mentor tip + common pitfall for this day
@@ -29,6 +30,13 @@ export interface DayInfo {
 
 const SLOT_LABEL = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 export const SLOT_BUDGET = [90, 90, 90, 90, 75, 180, 180];
+
+/** Friday checklist labels — shared by the Friday day card and the Revision Hub (same saved checkboxes). */
+export const FRIDAY_CHECKS = [
+  'Answer this week’s 4 cold-recall questions from memory',
+  'Re-solve the 2 tricky problems from Friday’s task cold, without notes',
+  'Clear the low-confidence & blocker queue',
+];
 
 export function dayInfo(n: number): DayInfo {
   const wk = Math.ceil(n / 7);
@@ -39,6 +47,7 @@ export function dayInfo(n: number): DayInfo {
   const topic = kind === 'learn' ? week.days[slot] : undefined;
   const plan = slot === 4 ? week.fri : slot === 5 ? week.sat : slot === 6 ? week.sun : undefined;
   const ex = EXTRAS[wk];
+  const primary = primaryResource(wk, slot, topic ? topic.track : plan!.track, (topic ? topic.res : plan!.res)[0]);
   const interview: DayInfo['interview'] = topic
     ? [
         { key: 'iq', kind: 'Conceptual', qa: topic.iq },
@@ -65,7 +74,8 @@ export function dayInfo(n: number): DayInfo {
     tip: dayTip(wk, slot),
     track: topic ? topic.track : plan!.track,
     title: topic ? topic.title : plan!.title,
-    res: [primaryResource(wk, slot, topic ? topic.track : plan!.track, (topic ? topic.res : plan!.res)[0])],
+    res: [primary],
+    refs: (topic ? topic.res : plan!.res).filter((id) => id !== primary),
     label: SLOT_LABEL[slot],
     budgetMin: SLOT_BUDGET[slot],
   };
