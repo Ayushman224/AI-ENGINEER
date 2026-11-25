@@ -20,7 +20,7 @@ export function Card({ children, className, ...rest }: { children: ReactNode; cl
 
 export function CardHeader({ icon, title, right, sub }: { icon?: ReactNode; title: ReactNode; right?: ReactNode; sub?: ReactNode }) {
   return (
-    <div className="flex items-start justify-between gap-3 border-b border-zinc-200 px-4 py-3 dark:border-zinc-800/80">
+    <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2 border-b border-zinc-200 px-4 py-3 dark:border-zinc-800/80">
       <div className="min-w-0">
         <div className="flex items-center gap-2 text-sm font-semibold">
           {icon && <span className="text-zinc-400">{icon}</span>}
@@ -134,7 +134,7 @@ export function StatusSelector({ value, onChange, disabled }: { value: Status; o
           disabled={disabled}
           onClick={() => onChange(o.v)}
           className={cx(
-            'flex items-center justify-center gap-1.5 rounded-md px-2 py-1.5 text-xs font-medium transition',
+            'flex min-h-9 items-center justify-center gap-1.5 rounded-md px-2 py-1.5 text-xs font-medium transition',
             value === o.v ? 'bg-white shadow-sm dark:bg-zinc-800' : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
           )}
         >
@@ -186,7 +186,7 @@ export function Reveal({ q, a, tag, checked, onCheck, disabled }: { q: string; a
         <div className="min-w-0 flex-1">
           {tag && <div className="mb-1">{tag}</div>}
           <div className="text-sm leading-snug">{q}</div>
-          <button onClick={() => setOpen(!open)} className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-violet-600 hover:text-violet-500 dark:text-violet-400">
+          <button onClick={() => setOpen(!open)} aria-expanded={open} className="-ml-1 mt-1 inline-flex min-h-8 items-center gap-1 rounded-md px-1 text-xs font-medium text-violet-600 hover:text-violet-500 dark:text-violet-400">
             {open ? <EyeOff size={12} /> : <Eye size={12} />}
             {open ? 'Hide answer' : 'Reveal answer / hint'}
           </button>

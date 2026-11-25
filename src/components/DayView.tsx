@@ -13,6 +13,7 @@ import { revisionQueue } from '../lib/selectors';
 import { emptyLog } from '../lib/state';
 import { useStore } from '../lib/store';
 import { CopyReportButton } from './CopyReportButton';
+import { askMentorPrompt, FocusTimer, MentorTips } from './DayTools';
 import { Markdown } from './Markdown';
 import { Badge, Btn, Card, CardHeader, cx, Label, ResourceRow, Reveal, Stars, StatusSelector, statusDot, TrackBadge } from './ui';
 
@@ -154,6 +155,9 @@ function DayCard({ n, isToday }: { n: number; isToday?: boolean }) {
 
         {info.kind === 'project' && info.plan && (
           <div className="mt-4 space-y-3">
+            <Block icon={<BookOpen size={14} />} title="Concept / Reading (first 20–30 min)">
+              {info.concept}
+            </Block>
             <Block icon={<Hammer size={14} />} title={info.slot === 5 ? '3 h · Hands-On Build (Part 1)' : '3 h · Hands-On Build + Evals (Part 2)'}>
               {info.plan.task}
             </Block>
@@ -180,6 +184,10 @@ function DayCard({ n, isToday }: { n: number; isToday?: boolean }) {
             <div className="space-y-2">{info.res.map((id) => RES[id] && <ResourceRow key={id} r={RES[id]} label="Visit Link" />)}</div>
           </div>
         )}
+
+        <MentorTips n={n} />
+
+        <FocusTimer n={n} />
 
         <div className="mt-5">
           <Label hint={log.status === 'floor' ? 'Streak kept alive — catch up later' : undefined}>Status</Label>
@@ -216,6 +224,9 @@ function FridayPlan({ n }: { n: number }) {
   ];
   return (
     <div className="mt-4 space-y-3">
+      <Block icon={<BookOpen size={14} />} title="Concept / Review (first 15 min)">
+        {info.concept}
+      </Block>
       <Block icon={<RotateCcw size={14} />} title="75 min · Strict Revision (zero new topics)">
         {info.plan?.task}
       </Block>
@@ -342,8 +353,6 @@ function recallSet(n: number): { n: number; qa: QA }[] {
   return out;
 }
 
-type IQKind = 'Conceptual' | 'Coding' | 'System Design';
-
 function InterviewPanel({ n }: { n: number }) {
   const { state, readOnly, updateLog } = useStore();
   const info = dayInfo(n);
@@ -354,12 +363,7 @@ function InterviewPanel({ n }: { n: number }) {
     .slice(0, 4)
     .map((d) => ({ n: d, qa: dayInfo(d).topic!.recall }));
   const recall = info.kind === 'learn' ? recallSet(n) : info.kind === 'revision' ? weekRecall : weekRecall.slice(info.slot === 5 ? 0 : 2, info.slot === 5 ? 2 : 4);
-  const interview: { key: string; kind: IQKind; qa: QA }[] =
-    info.kind === 'learn'
-      ? [{ key: 'iq', kind: 'Conceptual', qa: info.topic!.iq }]
-      : info.slot === 6
-        ? [{ key: 'design', kind: 'System Design', qa: w.design }]
-        : [{ key: 'coding', kind: 'Coding', qa: w.coding }];
+  const interview = info.interview;
   const toggle = (key: string, v: boolean) => updateLog(n, { practiced: v ? [...new Set([...log.practiced, key])] : log.practiced.filter((k) => k !== key) });
   const keys = [...recall.map((_, i) => `recall${i}`), ...interview.map((q) => q.key)];
   const total = keys.length;
@@ -402,14 +406,14 @@ function InterviewPanel({ n }: { n: number }) {
           </div>
         </div>
         <div>
-          <Label>Real interview question</Label>
+          <Label hint="tap to reveal model answers">Real interview questions</Label>
           <div className="space-y-2">
             {interview.map((q) => (
               <Reveal
                 key={q.key}
                 q={q.qa.q}
                 a={q.qa.a}
-                tag={<Badge tone={q.kind === 'Conceptual' ? 'blue' : q.kind === 'Coding' ? 'green' : 'pink'}>{q.kind}</Badge>}
+                tag={<Badge tone={q.kind === 'Conceptual' ? 'blue' : q.kind === 'Coding' ? 'green' : q.kind === 'Build Deep-Dive' ? 'amber' : 'pink'}>{q.kind}</Badge>}
                 checked={log.practiced.includes(q.key)}
                 onCheck={(v) => toggle(q.key, v)}
                 disabled={readOnly}
@@ -435,7 +439,12 @@ function Logbook({ n }: { n: number }) {
 
   return (
     <Card>
-      <CardHeader icon={<NotebookPen size={15} />} title="Daily Check-In Logbook" sub={`Day ${info.slot + 1} · autosaves as you type`} />
+      <CardHeader
+        icon={<NotebookPen size={15} />}
+        title="Daily Check-In Logbook"
+        sub={`Day ${info.slot + 1} · autosaves as you type`}
+        right={<CopyReportButton size="sm" variant="secondary" label="Ask AI Mentor About Today" getText={() => askMentorPrompt(n, state.logs)} />}
+      />
       <div className="space-y-5 p-4">
         <div>
           <div className="mb-1.5 flex items-center justify-between">

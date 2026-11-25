@@ -59,6 +59,27 @@ Each week shows a **7-day selector**, and each day has its own topic, track badg
 
 Data lives in `src/data/weeks*.ts` (Mon–Thu topics) and `src/data/weekly.ts` (stage labels and Fri/Sat/Sun plans). The Roadmap filter shows any one track across the whole plan.
 
+## Every day, fully specified (V2.0 audit)
+
+An automated audit of all 280 days (40 weeks × 7) passes with zero gaps. Every day has:
+- a concept/reading step and a hands-on task
+- 1–2 links (all 73 resource URLs return HTTP 200, all open in a new tab with `rel="noopener noreferrer"`)
+- 2 interview questions with collapsible model answers, plus 3–4 cold-recall questions
+- a mentor tip and a common pitfall
+
+Per-day content lives in `src/data/weeks*.ts` (Mon–Thu), `src/data/weekly.ts` (Fri/Sat/Sun tasks) and `src/data/extrasA.ts` / `extrasB.ts` (Fri/Sat/Sun reading, weekend questions, daily tips).
+
+## Workflow tools
+
+- **Focus timer** (in each day card): Start / Pause / Reset. It survives refreshes and app switches. **Log Time to Today's Entry** adds the elapsed minutes to Time Taken.
+- **Missed a day? Shift +1 Day** (header): makes the first unfinished day from today a rest day, so every later day moves +1. Past logs are untouched, and the toast has **Undo**.
+- **Ask AI Mentor About Today** (logbook header): copies a prompt with today's topic, tasks, links, your notes and blocker, plus a Staff-AI-Engineer mentoring instruction.
+- **Interview Cheat Sheets** (Cookbooks drawer tab):
+  - Transformer & GPU memory math
+  - RAG debugging checklist
+  - OWASP LLM/Agentic security checklist
+  - 45-minute AI system design framework
+
 ## Cookbooks & Notes
 
 The four 2026 topics now sit inside specific days:

@@ -1,5 +1,6 @@
 import { PHASES, WEEKS } from '../data/curriculum';
-import type { DayBadge, DayPlan, Phase, TopicDay, Week } from '../data/types';
+import { dayTip, type DayTip, EXTRAS } from '../data/extras';
+import type { DayBadge, DayPlan, Phase, QA, TopicDay, Week } from '../data/types';
 
 export const TOTAL_DAYS = 280;
 export const WEEKLY_TARGET_MIN = 810; // 13.5 h
@@ -19,6 +20,10 @@ export interface DayInfo {
   track: DayBadge; // the single active badge for this day
   title: string;
   res: string[]; // this day's 1–2 links
+  concept: string; // concept / reading step
+  practice: string; // hands-on coding / build step
+  tip: DayTip; // mentor tip + common pitfall for this day
+  interview: { key: string; kind: 'Conceptual' | 'Coding' | 'System Design' | 'Build Deep-Dive'; qa: QA }[]; // 2 per day
 }
 
 const SLOT_LABEL = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -32,8 +37,31 @@ export function dayInfo(n: number): DayInfo {
   const kind: SlotKind = slot < 4 ? 'learn' : slot === 4 ? 'revision' : 'project';
   const topic = kind === 'learn' ? week.days[slot] : undefined;
   const plan = slot === 4 ? week.fri : slot === 5 ? week.sat : slot === 6 ? week.sun : undefined;
+  const ex = EXTRAS[wk];
+  const interview: DayInfo['interview'] = topic
+    ? [
+        { key: 'iq', kind: 'Conceptual', qa: topic.iq },
+        slot % 2 === 0 ? { key: 'coding', kind: 'Coding', qa: week.coding } : { key: 'design', kind: 'System Design', qa: week.design },
+      ]
+    : slot === 4
+      ? [
+          { key: 'coding', kind: 'Coding', qa: week.coding },
+          { key: 'design', kind: 'System Design', qa: week.design },
+        ]
+      : slot === 5
+        ? [
+            { key: 'build', kind: 'Build Deep-Dive', qa: { q: ex.satQ[0], a: ex.satQ[1] } },
+            { key: 'coding', kind: 'Coding', qa: week.coding },
+          ]
+        : [
+            { key: 'build', kind: 'Build Deep-Dive', qa: { q: ex.sunQ[0], a: ex.sunQ[1] } },
+            { key: 'design', kind: 'System Design', qa: week.design },
+          ];
   return {
-    n, week, phase, slot, kind, topic, plan,
+    n, week, phase, slot, kind, topic, plan, interview,
+    concept: topic ? topic.learn : ex.read[slot - 4],
+    practice: topic ? topic.build : plan!.task,
+    tip: dayTip(wk, slot),
     track: topic ? topic.track : plan!.track,
     title: topic ? topic.title : plan!.title,
     res: (topic ? topic.res : plan!.res).slice(0, 2),

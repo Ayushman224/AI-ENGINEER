@@ -1,9 +1,10 @@
-import { BookMarked, Bot, FolderKanban, HardDriveDownload, House, Map, Moon, PanelLeftClose, PanelLeftOpen, RotateCcw, Settings, Sun } from 'lucide-react';
+import { BookMarked, Bot, CalendarPlus, FolderKanban, HardDriveDownload, House, Map, Moon, PanelLeftClose, PanelLeftOpen, RotateCcw, Settings, Sun } from 'lucide-react';
 import { useEffect, useState, type ReactNode } from 'react';
 import { BackupModal } from './BackupModal';
 import { CookbooksDrawer } from './CookbooksDrawer';
 import type { Route } from '../lib/router';
-import { revisionQueue } from '../lib/selectors';
+import { fmtDate, resolveDay, TOTAL_DAYS } from '../lib/schedule';
+import { isDone, revisionQueue } from '../lib/selectors';
 import { useStore } from '../lib/store';
 import { cx } from './ui';
 
@@ -16,7 +17,7 @@ const NAV = [
 ] as const;
 
 export function Layout({ route, children }: { route: Route; children: ReactNode }) {
-  const { state, update, readOnly, today } = useStore();
+  const { state, update, readOnly, today, cal } = useStore();
   const collapsed = state.settings.sidebarCollapsed;
   const active = route.name === 'day' ? 'roadmap' : route.name;
   const backlog = revisionQueue(state, today).length;
@@ -29,6 +30,36 @@ export function Layout({ route, children }: { route: Route; children: ReactNode 
     window.addEventListener('aieos-open-backup', on);
     return () => window.removeEventListener('aieos-open-backup', on);
   }, []);
+
+  // “Missed a day?” — insert one rest day at the first unfinished day from today onward.
+  // Every later day moves +1; completed logs (keyed by day number) are never touched.
+  const [shifted, setShifted] = useState<{ date: string; n: number } | null>(null);
+  const shiftOneDay = () => {
+    let k = resolveDay(cal, today).n;
+    while (k < TOTAL_DAYS && isDone(state.logs[k])) k++;
+    const date = cal.dates[k - 1];
+    if (!date || state.settings.skipped.includes(date)) return;
+    update((d) => {
+      d.settings.skipped = [...d.settings.skipped, date].sort();
+    });
+    setShifted({ date, n: k });
+  };
+  useEffect(() => {
+    if (!shifted) return;
+    const id = setTimeout(() => setShifted(null), 8000);
+    return () => clearTimeout(id);
+  }, [shifted]);
+  const shiftBtn = readOnly ? null : (
+    <button
+      onClick={shiftOneDay}
+      title="Missed a day? Shift every unfinished day forward by 1 day (past logs are kept)"
+      aria-label="Shift schedule by one day"
+      className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-zinc-200 px-2.5 text-xs font-medium text-zinc-600 transition hover:bg-zinc-100 dark:border-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800"
+    >
+      <CalendarPlus size={13} />
+      <span className="hidden sm:inline">Missed a day? Shift +1 Day</span>
+    </button>
+  );
 
   const syncBadge = readOnly ? null : (
     <button
@@ -105,9 +136,10 @@ export function Layout({ route, children }: { route: Route; children: ReactNode 
         <header className="flex h-12 shrink-0 items-center justify-between border-b border-zinc-200 px-4 lg:hidden dark:border-zinc-800/80">
           <div className="flex items-center gap-2">
             <img src="/icon.svg" alt="" className="h-6 w-6 rounded-md" />
-            <span className="text-sm font-semibold">AI Engineer OS</span>
+            <span className="hidden text-sm font-semibold whitespace-nowrap min-[420px]:inline">AI Engineer OS</span>
           </div>
           <div className="flex items-center gap-1">
+            {shiftBtn}
             {syncBadge}
             <IconBtn onClick={() => setBooksOpen(true)} label="Cookbooks & Notes">
               <BookMarked size={16} />
@@ -121,6 +153,7 @@ export function Layout({ route, children }: { route: Route; children: ReactNode 
 
         {/* Desktop header */}
         <header className="hidden h-12 shrink-0 items-center justify-end gap-2 border-b border-zinc-200 px-6 lg:flex dark:border-zinc-800/80">
+          {shiftBtn}
           <button onClick={() => setBooksOpen(true)} className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-zinc-200 px-2.5 text-xs font-medium text-zinc-600 transition hover:bg-zinc-100 dark:border-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800">
             <BookMarked size={13} /> Cookbooks & Notes
           </button>
@@ -168,6 +201,23 @@ export function Layout({ route, children }: { route: Route; children: ReactNode 
       </div>
       <BackupModal open={backupOpen} onClose={() => setBackupOpen(false)} />
       <CookbooksDrawer open={booksOpen} onClose={() => setBooksOpen(false)} />
+      {shifted && (
+        <div role="status" className="fixed inset-x-3 bottom-20 z-50 mx-auto flex max-w-md items-center gap-3 rounded-xl border border-zinc-200 bg-white p-3 text-sm shadow-xl lg:bottom-6 dark:border-zinc-700 dark:bg-zinc-900">
+          <CalendarPlus size={16} className="shrink-0 text-violet-500" />
+          <span className="flex-1">
+            Shifted: Day {shifted.n} and everything after moved +1 day ({fmtDate(shifted.date)} is now a rest day).
+          </span>
+          <button
+            className="shrink-0 rounded-md px-2 py-1 text-xs font-semibold text-violet-600 hover:bg-violet-50 dark:text-violet-400 dark:hover:bg-violet-500/10"
+            onClick={() => {
+              update((d) => void (d.settings.skipped = d.settings.skipped.filter((x) => x !== shifted.date)));
+              setShifted(null);
+            }}
+          >
+            Undo
+          </button>
+        </div>
+      )}
     </div>
   );
 }
