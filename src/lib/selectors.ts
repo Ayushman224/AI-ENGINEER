@@ -95,22 +95,21 @@ export function phaseProgress(s: AppState) {
   return res;
 }
 
-// ── Track progress ──
-import { TRACK_ORDER, trackKey, type Track } from '../data/tracks';
+// ── Track progress (per day: every day has exactly one active track) ──
+import { TRACK_ORDER, type Track } from '../data/tracks';
 
-export function isTrackDone(s: AppState, w: number, t: Track): boolean {
-  if (s.trackDone?.[trackKey(w, t)]) return true;
-  if (t === 'ai') return weekDays(w).slice(0, 4).every((n) => s.logs[n]?.status === 'completed');
-  return false;
-}
-
-/** Per-track completion for weeks 1..uptoWeek (the tasks you should have done by now). */
-export function trackStats(s: AppState, uptoWeek: number) {
-  return TRACK_ORDER.map((t) => {
-    let done = 0;
-    for (let w = 1; w <= uptoWeek; w++) if (isTrackDone(s, w, t)) done++;
-    let all = 0;
-    for (let w = 1; w <= 40; w++) if (isTrackDone(s, w, t)) all++;
-    return { track: t, done, due: uptoWeek, all };
-  });
+/** For each track: days scheduled in the whole plan, days due up to `uptoDay`, days completed, minutes logged. */
+export function trackStats(s: AppState, uptoDay = TOTAL_DAYS) {
+  const acc = new Map<Track, { track: Track; total: number; due: number; done: number; minutes: number }>(TRACK_ORDER.map((t) => [t, { track: t, total: 0, due: 0, done: 0, minutes: 0 }]));
+  for (let n = 1; n <= TOTAL_DAYS; n++) {
+    const t = dayInfo(n).track;
+    if (t === 'revision') continue;
+    const row = acc.get(t)!;
+    row.total++;
+    if (n <= uptoDay) row.due++;
+    const l = s.logs[n];
+    if (l?.status === 'completed') row.done++;
+    row.minutes += l?.minutes || 0;
+  }
+  return [...acc.values()];
 }

@@ -1,7 +1,10 @@
-import type { TopicDay, Week } from './types';
+import type { TopicDay, Track, Week } from './types';
 
-/** Compact day tuple: [title, learn, build, resIds (space-separated), recallQ, recallA, interviewQ, interviewA] */
-export type D = [string, string, string, string, string, string, string, string];
+/** Compact day tuple: [title, learn, build, resIds (space-separated), recallQ, recallA, interviewQ, interviewA, track?] */
+export type D = [string, string, string, string, string, string, string, string, Track?];
+
+/** Week fields filled in later from WEEKLY (stage + Fri/Sat/Sun plans). */
+export type RawWeek = Omit<Week, 'stage' | 'fri' | 'sat' | 'sun'>;
 
 interface WeekMeta {
   why: string;
@@ -13,7 +16,7 @@ interface WeekMeta {
   project?: number;
 }
 
-export function W(n: number, phase: number, title: string, m: WeekMeta, days: D[]): Week {
+export function W(n: number, phase: number, title: string, m: WeekMeta, days: D[]): RawWeek {
   if (days.length !== 4) throw new Error(`Week ${n} must have 4 days`);
   return {
     n,
@@ -27,13 +30,14 @@ export function W(n: number, phase: number, title: string, m: WeekMeta, days: D[
     weekend: m.weekend,
     project: m.project,
     days: days.map(
-      ([title, learn, build, res, rq, ra, iq, ia]): TopicDay => ({
+      ([title, learn, build, res, rq, ra, iq, ia, track]): TopicDay => ({
         title,
         learn,
         build,
         res: res.split(' ').filter(Boolean),
         recall: { q: rq, a: ra },
         iq: { q: iq, a: ia },
+        track: track ?? (phase === 7 ? 'interview' : 'ai'),
       })
     ),
   };

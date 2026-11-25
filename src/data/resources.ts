@@ -16,6 +16,8 @@ export const RESOURCES: Resource[] = [
   r('neetcode-ml', 'NeetCode — Machine Learning Practice', 'https://neetcode.io/practice/machine-learning', 'Practice', '20–40 min / problem'),
   r('deepml', 'Deep-ML — ML Coding Practice', 'https://www.deep-ml.com/', 'Practice', '15–30 min / problem'),
   r('numpy', 'NumPy — Absolute Beginners Guide', 'https://numpy.org/doc/stable/user/absolute_beginners.html', 'Docs', '~1 h'),
+  r('numpy-quickstart', 'NumPy — Quickstart', 'https://numpy.org/doc/stable/user/quickstart.html', 'Docs', '~1 h'),
+  r('pytest', 'pytest — Getting Started', 'https://docs.pytest.org/en/stable/getting-started.html', 'Docs', '~30 min'),
   r('sklearn', 'scikit-learn — User Guide', 'https://scikit-learn.org/stable/user_guide.html', 'Docs', 'reference'),
   r('pytorch-tut', 'PyTorch — Learn the Basics', 'https://pytorch.org/tutorials/beginner/basics/intro.html', 'Docs', '~2 h'),
 

@@ -34,19 +34,40 @@ Everything is stored **locally in your browser** (localStorage). There's no acco
 
 Export regularly, because clearing browser data deletes local progress. The Mentor Sync screen can also make a read-only share link that packs a snapshot of your progress into the URL.
 
-## Tracks
+## Sequential track unlocking
 
-Every week has 5 color-coded track tasks with links: **AI Core** (the daily topic), **Backend** (drilled on Mondays), **Docker** (Tuesdays), **Security & CI/CD** (Wednesdays) and **AWS** (Thursdays). Focus windows get full hands-on sessions: Backend W9–12, Docker W10–15, Security & CI/CD W14–16 and W22–24, AWS W25–28. Outside those windows the task is a 15–20 min drill. Use the Roadmap's track filter to see one track across all 40 weeks. Track tasks are in `src/data/tracks.ts`.
+Every day has exactly **one active track**, and tracks unlock in engineering order:
 
-## 2026 production topics & Cookbooks
+| Weeks | Stage | Tracks |
+|---|---|---|
+| 1–8 | Phase 1: Math, ML, PyTorch & Transformers | AI Core only |
+| 9–10 | Phase 2A | AI Core + **Backend** (FastAPI, async, Pydantic, SSE, pgvector, Redis) |
+| 11–12 | Phase 2B | Context engineering + **Docker** (multi-stage, .dockerignore, Compose) |
+| 13–14 | Phase 3A | AI Core: agents, LangGraph, PydanticAI / OpenAI Agents SDK, MCP |
+| 15–16 | Phase 3B | **Security** (OWASP LLM & Agentic, PII, least privilege, approvals, vector RBAC, sandboxes) |
+| 17–20 | Phase 4 | AI Core: fine-tuning & alignment |
+| 21–22 | Phase 5A | AI Core: evals, Langfuse, Ragas, retrieval-first debugging |
+| 23–24 | Phase 5B | **CI/CD** (GitHub Actions, tests, eval gates, deploys) |
+| 25–28 | Phase 6 | vLLM inference + **AWS** (IAM, S3, ECR, ECS/App Runner, EC2 GPU spot, Bedrock, Secrets, CloudWatch, Billing) |
+| 29–40 | Phase 7 | **Interview Prep** |
 
-Four modern topics are woven into specific weeks. Each has one concrete task per week and an interview question in the Interview Prep panel:
-- **Multimodal Document Parsing & Vision-RAG** (W9–12)
-- **Type-Safe Agent SDKs: PydanticAI & OpenAI Agents SDK** (W13–16)
-- **Retrieval-First Debugging & Grounding** (W21–24)
-- **Reasoning Models & Test-Time Compute Trade-Offs** (W25–28)
+Each week shows a **7-day selector**, and each day has its own topic, track badge, 1–2 links, task, interview questions and logbook:
+- **Day 1–4 (Mon–Thu):** 45m concept/docs + 45m practice
+- **Day 5 (Fri):** 75m strict revision gate (no new topics)
+- **Day 6 (Sat):** 3h build, part 1
+- **Day 7 (Sun):** 3h build part 2 + evals, plus a Copy Weekly Mentor Report button
 
-The **Cookbooks & Notes** drawer (sidebar and header) holds 8 reference repos. They're bookmarks only and never count toward daily hours. All of this lives in `src/data/modern.ts`.
+Data lives in `src/data/weeks*.ts` (Mon–Thu topics) and `src/data/weekly.ts` (stage labels and Fri/Sat/Sun plans). The Roadmap filter shows any one track across the whole plan.
+
+## Cookbooks & Notes
+
+The four 2026 topics now sit inside specific days:
+- Vision-RAG: W10 Thu
+- PydanticAI and OpenAI Agents SDK: W14 Mon–Tue
+- Retrieval-first debugging: W22 Thu
+- Reasoning-model routing: W27 Mon
+
+The **Cookbooks & Notes** drawer holds 8 reference repos (`src/data/modern.ts`). They're bookmarks only and never count toward hours.
 
 ## Deploy
 

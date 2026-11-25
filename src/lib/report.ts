@@ -1,7 +1,6 @@
 import { RES } from '../data/resources';
-import { modernForWeek, modernKey } from '../data/modern';
-import { TRACK_ORDER, trackTask, TRACKS } from '../data/tracks';
-import { isTrackDone, overallPct, revisionQueue, streak, trackStats, weekMinutes } from './selectors';
+import { TRACKS } from '../data/tracks';
+import { overallPct, revisionQueue, streak, trackStats, weekMinutes } from './selectors';
 import { type Calendar, dayInfo, fmtDate, TOTAL_DAYS, weekDays } from './schedule';
 import type { AppState, DayLog } from './state';
 
@@ -67,16 +66,17 @@ export function mentorReport(s: AppState, cal: Calendar, today: string, currentD
   L.push(`- **Overall progress:** ${overallPct(s).toFixed(1)}% of 280 days · Revision backlog: ${queue.length}`, '');
 
   L.push('## 2. Breakdown by track');
-  L.push(`| Track | This week's task (W${wk}) | Done this week | Weeks done (W1–W${wk}) |`);
+  L.push(`_Stage: ${info.week.stage}_`, '');
+  L.push(`| Track | Days done / due so far | Hours logged | This week |`);
   L.push('|---|---|---|---|');
-  const stats = trackStats(s, wk);
-  for (const t of TRACK_ORDER) {
-    const task = trackTask(wk, t);
-    const st = stats.find((x) => x.track === t)!;
-    L.push(`| ${TRACKS[t].label}${task.focus && t !== 'ai' ? ' (focus week)' : ''} | ${cell(t === 'ai' ? info.week.title : task.task)} | ${isTrackDone(s, wk, t) ? '✅' : '⬜'} | ${st.done}/${st.due} |`);
+  for (const st of trackStats(s, currentDay)) {
+    if (st.due === 0 && st.minutes === 0) continue; // track not unlocked yet
+    const wkDays = weekDays(wk).filter((d) => dayInfo(d).track === st.track);
+    const wkCell = wkDays.length ? wkDays.map((d) => `${dayInfo(d).label} ${s.logs[d]?.status === 'completed' ? '✅' : '⬜'}`).join(' ') : '—';
+    L.push(`| ${TRACKS[st.track].label} | ${st.done}/${st.due} | ${hm(st.minutes)} | ${wkCell} |`);
   }
-  const modern = modernForWeek(wk);
-  if (modern) L.push(`| 2026 topic: ${cell(modern.title)} | ${cell(modern.tasks[wk])} | ${s.trackDone?.[modernKey(wk)] ? '✅' : '⬜'} | — |`);
+  const locked = trackStats(s, currentDay).filter((st) => st.due === 0 && st.minutes === 0).map((st) => TRACKS[st.track].label);
+  if (locked.length) L.push('', `_Not unlocked yet: ${locked.join(', ')}._`);
   L.push('');
 
   L.push('## 3. Recent daily entries');

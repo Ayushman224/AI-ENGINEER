@@ -1,7 +1,8 @@
 import { ArrowUpRight, BookOpen, Code2, Dumbbell, Eye, EyeOff, FileText, GraduationCap, PlayCircle, Star } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
 import type { Resource } from '../data/types';
-import { TRACKS, type Track } from '../data/tracks';
+import { TRACKS } from '../data/tracks';
+import type { DayBadge } from '../data/types';
 import type { Status } from '../lib/state';
 
 /** Only allow http(s) links from user/shared data (blocks javascript: URLs in shared snapshots). */
@@ -229,13 +230,12 @@ export function Empty({ children }: { children: ReactNode }) {
   return <div className="rounded-lg border border-dashed border-zinc-300 p-6 text-center text-sm text-zinc-500 dark:border-zinc-800">{children}</div>;
 }
 
-export function TrackBadge({ track, focus, className }: { track: Track; focus?: boolean; className?: string }) {
+export function TrackBadge({ track, className }: { track: DayBadge; className?: string }) {
   const t = TRACKS[track];
   return (
     <span className={cx('inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[11px] font-medium whitespace-nowrap', t.badge, className)}>
       <span className="h-1.5 w-1.5 rounded-full" style={{ background: t.color }} />
       {t.label}
-      {focus && <span className="opacity-70">· focus</span>}
     </span>
   );
 }

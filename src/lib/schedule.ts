@@ -1,5 +1,5 @@
 import { PHASES, WEEKS } from '../data/curriculum';
-import type { Phase, TopicDay, Week } from '../data/types';
+import type { DayBadge, DayPlan, Phase, TopicDay, Week } from '../data/types';
 
 export const TOTAL_DAYS = 280;
 export const WEEKLY_TARGET_MIN = 810; // 13.5 h
@@ -14,11 +14,15 @@ export interface DayInfo {
   kind: SlotKind;
   label: string; // Mon, Tue...
   budgetMin: number;
-  topic?: TopicDay; // learn days only
+  topic?: TopicDay; // Mon–Thu only
+  plan?: DayPlan; // Fri / Sat / Sun
+  track: DayBadge; // the single active badge for this day
   title: string;
+  res: string[]; // this day's 1–2 links
 }
 
 const SLOT_LABEL = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+export const SLOT_BUDGET = [90, 90, 90, 90, 75, 180, 180];
 
 export function dayInfo(n: number): DayInfo {
   const wk = Math.ceil(n / 7);
@@ -27,16 +31,14 @@ export function dayInfo(n: number): DayInfo {
   const phase = PHASES[week.phase - 1];
   const kind: SlotKind = slot < 4 ? 'learn' : slot === 4 ? 'revision' : 'project';
   const topic = kind === 'learn' ? week.days[slot] : undefined;
-  const title =
-    kind === 'learn'
-      ? topic!.title
-      : kind === 'revision'
-        ? `Revision Day — Week ${wk}: ${week.title}`
-        : `Deep Build (${slot === 5 ? 'Sat' : 'Sun'}) — ${week.weekend.split(':')[0].replace(/\.$/, '')}`;
+  const plan = slot === 4 ? week.fri : slot === 5 ? week.sat : slot === 6 ? week.sun : undefined;
   return {
-    n, week, phase, slot, kind, title, topic,
+    n, week, phase, slot, kind, topic, plan,
+    track: topic ? topic.track : plan!.track,
+    title: topic ? topic.title : plan!.title,
+    res: (topic ? topic.res : plan!.res).slice(0, 2),
     label: SLOT_LABEL[slot],
-    budgetMin: kind === 'learn' ? 90 : kind === 'revision' ? 75 : 180,
+    budgetMin: SLOT_BUDGET[slot],
   };
 }
 

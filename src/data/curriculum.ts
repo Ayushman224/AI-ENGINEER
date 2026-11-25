@@ -3,6 +3,7 @@ import { RES } from './resources';
 import { WEEKS_P1 } from './weeks1';
 import { WEEKS_P2_4 } from './weeks2';
 import { WEEKS_P5_7 } from './weeks3';
+import { weeklyFor } from './weekly';
 
 export const PHASES: Phase[] = [
   {
@@ -42,7 +43,7 @@ export const PHASES: Phase[] = [
   },
 ];
 
-export const WEEKS: Week[] = [...WEEKS_P1, ...WEEKS_P2_4, ...WEEKS_P5_7].sort((a, b) => a.n - b.n);
+export const WEEKS: Week[] = [...WEEKS_P1, ...WEEKS_P2_4, ...WEEKS_P5_7].sort((a, b) => a.n - b.n).map((w) => ({ ...w, ...weeklyFor(w.n, w.phase) }));
 
 if (import.meta.env.DEV) {
   if (WEEKS.length !== 40) console.error(`Curriculum has ${WEEKS.length} weeks, expected 40`);
@@ -52,6 +53,9 @@ if (import.meta.env.DEV) {
         if (!RES[id]) console.error(`Week ${w.n} “${d.title}” references unknown resource “${id}”`);
       })
     )
+  );
+  WEEKS.forEach((w) =>
+    [w.fri, w.sat, w.sun].forEach((p) => p.res.forEach((id) => !RES[id] && console.error(`Week ${w.n} “${p.title}” references unknown resource “${id}”`)))
   );
 }
 

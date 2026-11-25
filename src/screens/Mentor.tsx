@@ -5,7 +5,7 @@ import { Btn, Card, CardHeader, cx, PageTitle, Progress, TrackBadge } from '../c
 import { exportBackup, readBackup } from '../lib/backup';
 import { copyText } from '../lib/clipboard';
 import { mentorReport, type Scope } from '../lib/report';
-import { dayInfo, resolveDay } from '../lib/schedule';
+import { resolveDay } from '../lib/schedule';
 import { trackStats } from '../lib/selectors';
 import { encodeShare } from '../lib/state';
 import { useStore } from '../lib/store';
@@ -17,9 +17,8 @@ export function Mentor() {
   const [msg, setMsg] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
   const n = resolveDay(cal, today).n;
-  const wk = dayInfo(n).week.n;
   const report = useMemo(() => mentorReport(state, cal, today, n, scope), [state, cal, today, n, scope]);
-  const stats = trackStats(state, wk);
+  const stats = trackStats(state, n).filter((x) => x.due > 0 || x.minutes > 0);
 
   const share = async () => {
     const token = await encodeShare(state);
@@ -62,8 +61,8 @@ export function Mentor() {
       </Card>
 
       <Card>
-        <CardHeader title="Track breakdown" sub={`Weeks completed per track, W1–W${wk}`} />
-        <div className="grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-5">
+        <CardHeader title="Track breakdown" sub="Days completed vs days due so far, per unlocked track" />
+        <div className="grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((s) => (
             <div key={s.track}>
               <div className="mb-1.5 flex items-center justify-between">

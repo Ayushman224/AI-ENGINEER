@@ -1,3 +1,7 @@
+export type Track = 'ai' | 'backend' | 'docker' | 'security' | 'cicd' | 'aws' | 'interview';
+/** Badge kinds shown on days: a track, or the Friday revision gate. */
+export type DayBadge = Track | 'revision';
+
 export type ResourceType = 'Video' | 'Course' | 'Docs' | 'GitHub' | 'Practice' | 'Article';
 
 export interface Resource {
@@ -25,6 +29,15 @@ export interface TopicDay {
   res: string[]; // resource ids
   recall: QA; // cold-recall question for this topic
   iq: QA; // conceptual interview question for this topic
+  track: Track; // the single active track for this day
+}
+
+/** Fri (revision gate), Sat (build part 1) and Sun (build part 2 + evals + mentor report). */
+export interface DayPlan {
+  title: string;
+  task: string;
+  res: string[];
+  track: DayBadge;
 }
 
 export interface Week {
@@ -37,8 +50,12 @@ export interface Week {
   days: TopicDay[]; // exactly 4 (Mon–Thu)
   coding: QA; // week coding interview question
   design: QA; // week system design question
-  weekend: string; // Sat–Sun deep build
+  weekend: string; // Sat–Sun deep build summary
   project?: number; // flagship project id the weekend feeds
+  stage: string; // e.g. "Phase 2A — AI Core + Backend"
+  fri: DayPlan;
+  sat: DayPlan;
+  sun: DayPlan;
 }
 
 export interface Phase {
