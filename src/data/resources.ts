@@ -55,6 +55,18 @@ export const RESOURCES: Resource[] = [
   r('aws-lambda', 'AWS Lambda — Developer Guide', 'https://docs.aws.amazon.com/lambda/latest/dg/welcome.html', 'Docs', '~1 h'),
   r('aws-apigw', 'Amazon API Gateway — Developer Guide', 'https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html', 'Docs', '~45 min'),
   r('aws-secrets', 'AWS Secrets Manager — User Guide', 'https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html', 'Docs', '~30 min'),
+  // Primary video teachers (one decisive resource per day — see primary.ts)
+  r('codebasics', 'Codebasics — Math, Statistics & ML Tutorials', 'https://www.youtube.com/@codebasics', 'Video', '~20–40 min / video'),
+  r('campusx-ml', 'CampusX — 100 Days of Machine Learning', 'https://www.youtube.com/@campusx-official/playlists', 'Video', '~30–60 min / video'),
+  r('campusx-dl', 'CampusX — 100 Days of Deep Learning', 'https://www.youtube.com/@campusx-official/playlists', 'Video', '~30–60 min / video'),
+  r('campusx-fastapi', 'CampusX — FastAPI for ML & Generative AI', 'https://www.youtube.com/@campusx-official/playlists', 'Video', '~30–60 min / video'),
+  r('campusx-agents', 'CampusX — Agentic AI using LangGraph', 'https://www.youtube.com/@campusx-official/playlists', 'Video', '~30–60 min / video'),
+  r('vizuara', 'Vizuara — Building LLMs / SLMs From Scratch', 'https://www.youtube.com/@vizuara/playlists', 'Video', '~45 min / lecture'),
+  r('abhishek-docker', 'Abhishek Veeramalla — Docker Zero to Hero', 'https://www.youtube.com/@AbhishekVeeramalla/playlists', 'Video', '~30–45 min / video'),
+  r('abhishek-cicd', 'Abhishek Veeramalla — CI/CD (GitHub Actions) Zero to Hero', 'https://www.youtube.com/@AbhishekVeeramalla/playlists', 'Video', '~30–45 min / video'),
+  r('abhishek-aws', 'Abhishek Veeramalla — AWS Zero to Hero', 'https://www.youtube.com/@AbhishekVeeramalla/playlists', 'Video', '~30–45 min / video'),
+  r('striver-a2z', 'Striver’s A2Z DSA Sheet (takeUforward)', 'https://takeuforward.org/prep-hub/strivers-a2z-dsa-sheet', 'Practice', '20–45 min / problem'),
+
   // 2026 production topics
   r('docling', 'Docling — Layout-aware Document Parsing (PDF, tables, figures)', 'https://github.com/docling-project/docling', 'GitHub', '~1 h'),
   r('pymupdf', 'PyMuPDF — Documentation', 'https://pymupdf.readthedocs.io/en/latest/', 'Docs', 'reference'),

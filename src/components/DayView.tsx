@@ -180,8 +180,8 @@ function DayCard({ n, isToday }: { n: number; isToday?: boolean }) {
 
         {info.res.length > 0 && (
           <div className="mt-4">
-            <Label hint="opens in a new tab">Links for this day</Label>
-            <div className="space-y-2">{info.res.map((id) => RES[id] && <ResourceRow key={id} r={RES[id]} label="Visit Link" />)}</div>
+            <Label hint="opens in a new tab">Primary resource</Label>
+            {RES[info.res[0]] && <ResourceRow r={RES[info.res[0]]} label="Open Resource" />}
           </div>
         )}
 

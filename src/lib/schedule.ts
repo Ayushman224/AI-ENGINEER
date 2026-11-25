@@ -1,5 +1,6 @@
 import { PHASES, WEEKS } from '../data/curriculum';
 import { dayTip, type DayTip, EXTRAS } from '../data/extras';
+import { primaryResource } from '../data/primary';
 import type { DayBadge, DayPlan, Phase, QA, TopicDay, Week } from '../data/types';
 
 export const TOTAL_DAYS = 280;
@@ -19,7 +20,7 @@ export interface DayInfo {
   plan?: DayPlan; // Fri / Sat / Sun
   track: DayBadge; // the single active badge for this day
   title: string;
-  res: string[]; // this day's 1–2 links
+  res: string[]; // exactly ONE primary resource for this day (see data/primary.ts)
   concept: string; // concept / reading step
   practice: string; // hands-on coding / build step
   tip: DayTip; // mentor tip + common pitfall for this day
@@ -64,7 +65,7 @@ export function dayInfo(n: number): DayInfo {
     tip: dayTip(wk, slot),
     track: topic ? topic.track : plan!.track,
     title: topic ? topic.title : plan!.title,
-    res: (topic ? topic.res : plan!.res).slice(0, 2),
+    res: [primaryResource(wk, slot, topic ? topic.track : plan!.track, (topic ? topic.res : plan!.res)[0])],
     label: SLOT_LABEL[slot],
     budgetMin: SLOT_BUDGET[slot],
   };

@@ -225,7 +225,7 @@ function DaySummary({ n, compact }: { n: number; compact?: boolean }) {
                 className="inline-flex max-w-full items-center gap-1 rounded-md border border-zinc-200 px-2 py-1 text-[11px] font-medium hover:bg-zinc-100 dark:border-zinc-800 dark:hover:bg-zinc-800"
               >
                 <span className="truncate">{RES[id].title}</span>
-                <span className="shrink-0 text-zinc-500">· Visit Link</span>
+                <span className="shrink-0 text-zinc-500">· Open Resource</span>
                 <ArrowUpRight size={11} className="shrink-0" />
               </a>
             )
