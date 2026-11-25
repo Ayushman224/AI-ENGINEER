@@ -1,6 +1,6 @@
-import { BookMarked, Bot, Cloud, CloudCog, CloudOff, FolderKanban, House, Map, Moon, PanelLeftClose, PanelLeftOpen, RotateCcw, Settings, Sun, TriangleAlert } from 'lucide-react';
+import { BookMarked, Bot, FolderKanban, HardDriveDownload, House, Map, Moon, PanelLeftClose, PanelLeftOpen, RotateCcw, Settings, Sun } from 'lucide-react';
 import { useEffect, useState, type ReactNode } from 'react';
-import { SyncModal } from './SyncModal';
+import { BackupModal } from './BackupModal';
 import { CookbooksDrawer } from './CookbooksDrawer';
 import type { Route } from '../lib/router';
 import { revisionQueue } from '../lib/selectors';
@@ -16,34 +16,28 @@ const NAV = [
 ] as const;
 
 export function Layout({ route, children }: { route: Route; children: ReactNode }) {
-  const { state, update, readOnly, sync, user, today } = useStore();
+  const { state, update, readOnly, today } = useStore();
   const collapsed = state.settings.sidebarCollapsed;
   const active = route.name === 'day' ? 'roadmap' : route.name;
   const backlog = revisionQueue(state, today).length;
   const dark = state.settings.theme === 'dark';
   const toggleTheme = () => update((d) => void (d.settings.theme = dark ? 'light' : 'dark'));
-  const [syncOpen, setSyncOpen] = useState(false);
+  const [backupOpen, setBackupOpen] = useState(false);
   const [booksOpen, setBooksOpen] = useState(false);
   useEffect(() => {
-    const on = () => setSyncOpen(true);
-    window.addEventListener('aieos-open-sync', on);
-    return () => window.removeEventListener('aieos-open-sync', on);
+    const on = () => setBackupOpen(true);
+    window.addEventListener('aieos-open-backup', on);
+    return () => window.removeEventListener('aieos-open-backup', on);
   }, []);
 
-  const syncLabel = user ? (sync === 'syncing' ? 'Syncing…' : sync === 'error' ? 'Sync error' : 'Synced') : 'Local';
   const syncBadge = readOnly ? null : (
     <button
-      onClick={() => setSyncOpen(true)}
-      title="Settings / Sync — Phone & PC"
-      className={cx(
-        'inline-flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-xs font-medium transition hover:bg-zinc-100 dark:hover:bg-zinc-800',
-        user && sync === 'error' ? 'border-rose-300 text-rose-500 dark:border-rose-500/40' : user ? 'border-emerald-300/60 text-emerald-600 dark:border-emerald-500/30 dark:text-emerald-400' : 'border-zinc-200 text-zinc-600 dark:border-zinc-800 dark:text-zinc-400'
-      )}
+      onClick={() => setBackupOpen(true)}
+      title="Saved in this browser — export/import a backup to move devices"
+      className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-zinc-200 px-2.5 text-xs font-medium text-zinc-600 transition hover:bg-zinc-100 dark:border-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800"
     >
-      {user ? sync === 'error' ? <TriangleAlert size={13} /> : <Cloud size={13} /> : <CloudOff size={13} />}
-      {syncLabel}
-      <span className="hidden text-zinc-400 sm:inline">· Sync</span>
-      <CloudCog size={13} className="text-zinc-400" />
+      <HardDriveDownload size={13} />
+      Backup
     </button>
   );
 
@@ -172,7 +166,7 @@ export function Layout({ route, children }: { route: Route; children: ReactNode 
           </div>
         </nav>
       </div>
-      <SyncModal open={syncOpen} onClose={() => setSyncOpen(false)} />
+      <BackupModal open={backupOpen} onClose={() => setBackupOpen(false)} />
       <CookbooksDrawer open={booksOpen} onClose={() => setBooksOpen(false)} />
     </div>
   );

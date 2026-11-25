@@ -1,11 +1,11 @@
-import { CalendarDays, Cloud, Trash2, X } from 'lucide-react';
+import { CalendarDays, HardDrive, Trash2, X } from 'lucide-react';
 import { Btn, Card, CardHeader, Label, PageTitle } from '../components/ui';
 import { fmtDate, fromISO, nextMonday } from '../lib/schedule';
 import { initialState } from '../lib/state';
 import { useStore } from '../lib/store';
 
 export function Settings() {
-  const { state, update, replace, readOnly, user, sync, syncError, cal, cloudConfigured } = useStore();
+  const { state, update, replace, readOnly, cal } = useStore();
   const start = state.settings.startDate;
   const notMonday = fromISO(start).getDay() !== 1;
 
@@ -49,14 +49,13 @@ export function Settings() {
       </Card>
 
       <Card>
-        <CardHeader icon={<Cloud size={15} />} title="Phone ↔ PC sync" sub={user ? `Cloud sync on · ${user.email} · ${sync}` : cloudConfigured ? 'Supabase keys saved — sign in to start syncing' : 'Guest mode — saved in this browser (localStorage)'} />
+        <CardHeader icon={<HardDrive size={15} />} title="Storage & backup" sub="Saved locally in this browser — no account, no server" />
         <div className="flex flex-wrap items-center gap-3 p-4 text-sm text-zinc-600 dark:text-zinc-400">
-          <p className="flex-1">Paste your Supabase URL + anon key for automatic sync, or move progress with a JSON backup — both live in the Sync panel (also in the top header).</p>
-          <Btn variant="primary" onClick={() => window.dispatchEvent(new Event('aieos-open-sync'))}>
-            Open Settings / Sync
+          <p className="flex-1">To move progress between Phone and PC, export a JSON backup and import it on the other device. Export regularly: clearing browser data deletes local progress.</p>
+          <Btn variant="primary" onClick={() => window.dispatchEvent(new Event('aieos-open-backup'))}>
+            Backup & Transfer
           </Btn>
         </div>
-        {syncError && <p className="px-4 pb-4 text-xs text-rose-500">{syncError}</p>}
       </Card>
 
       <Card>
@@ -66,7 +65,7 @@ export function Settings() {
             variant="danger"
             disabled={readOnly}
             onClick={() => {
-              if (confirm('Erase ALL progress on this device (and in the cloud if signed in)? This cannot be undone. Export a JSON backup first if unsure.')) replace({ ...initialState(), settings: { ...state.settings, skipped: [] } });
+              if (confirm('Erase ALL progress on this device? This cannot be undone. Export a JSON backup first if unsure.')) replace({ ...initialState(), settings: { ...state.settings, skipped: [] } });
             }}
           >
             Reset all progress
