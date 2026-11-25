@@ -108,8 +108,6 @@ The **Cookbooks & Notes** drawer holds 8 reference repos (`src/data/modern.ts`).
 
 ## Deploy
 
-**Live:** https://ayushman224.github.io/AI-ENGINEER/. Every push to `main` redeploys it through `.github/workflows/deploy.yml`, which builds the app and publishes it to the `gh-pages` branch.
-
 
 `npm run build` produces a static `dist/` folder. Deploy it to Vercel, Netlify, Cloudflare Pages or GitHub Pages. Once served over HTTPS, it is installable as a PWA ("Add to Home Screen").
 
