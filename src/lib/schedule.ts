@@ -1,6 +1,7 @@
 import { PHASES, WEEKS } from '../data/curriculum';
 import { dayTip, type DayTip, EXTRAS } from '../data/extras';
-import { primaryResource } from '../data/primary';
+import { dayLinks, type Link } from '../data/links';
+import { RES } from '../data/resources';
 import type { DayBadge, DayPlan, Phase, QA, TopicDay, Week } from '../data/types';
 
 export const TOTAL_DAYS = 280;
@@ -20,7 +21,7 @@ export interface DayInfo {
   plan?: DayPlan; // Fri / Sat / Sun
   track: DayBadge; // the single active badge for this day
   title: string;
-  res: string[]; // exactly ONE primary resource for this day (see data/primary.ts)
+  links: { primary: Link; alt?: Link }; // dedicated Primary + 🇮🇳 Indian Alternative (see data/links.ts)
   refs: string[]; // other resources the day's task text names (shown as small text links)
   concept: string; // concept / reading step
   practice: string; // hands-on coding / build step
@@ -47,7 +48,8 @@ export function dayInfo(n: number): DayInfo {
   const topic = kind === 'learn' ? week.days[slot] : undefined;
   const plan = slot === 4 ? week.fri : slot === 5 ? week.sat : slot === 6 ? week.sun : undefined;
   const ex = EXTRAS[wk];
-  const primary = primaryResource(wk, slot, topic ? topic.track : plan!.track, (topic ? topic.res : plan!.res)[0]);
+  const links = dayLinks(wk, slot);
+  const linkUrls = [links.primary.url, links.alt?.url].filter(Boolean).map((u) => u!.split('&t=')[0]);
   const interview: DayInfo['interview'] = topic
     ? [
         { key: 'iq', kind: 'Conceptual', qa: topic.iq },
@@ -74,8 +76,8 @@ export function dayInfo(n: number): DayInfo {
     tip: dayTip(wk, slot),
     track: topic ? topic.track : plan!.track,
     title: topic ? topic.title : plan!.title,
-    res: [primary],
-    refs: (topic ? topic.res : plan!.res).filter((id) => id !== primary),
+    links,
+    refs: (topic ? topic.res : plan!.res).filter((id) => RES[id] && !linkUrls.includes(RES[id].url)),
     label: SLOT_LABEL[slot],
     budgetMin: SLOT_BUDGET[slot],
   };

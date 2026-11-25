@@ -5,7 +5,7 @@ const r = (id: string, title: string, url: string, type: Resource['type'], est: 
 export const RESOURCES: Resource[] = [
   // Phase 1 — Math, classical ML, PyTorch, Transformers
   r('3b1b-la', '3Blue1Brown — Essence of Linear Algebra', 'https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab', 'Video', '~3.5 h'),
-  r('statquest', 'StatQuest — Playlists (Stats, ML, NN)', 'https://www.youtube.com/@statquest/playlists', 'Video', 'pick per topic, 10–20 min each'),
+  r('statquest', 'StatQuest — Machine Learning playlist', 'https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF', 'Video', '10–20 min / video'),
   r('cs229', 'Stanford CS229 — Machine Learning', 'https://www.youtube.com/watch?v=DATnpGoGhM8', 'Video', '~1.3 h / lecture'),
   r('fastai', 'Fast.ai — Practical Deep Learning for Coders', 'https://course.fast.ai/', 'Course', '~1.5 h / lesson'),
   r('karpathy', 'Andrej Karpathy — Neural Networks: Zero to Hero', 'https://karpathy.ai/zero-to-hero.html', 'Video', '~2 h / episode'),
@@ -56,15 +56,15 @@ export const RESOURCES: Resource[] = [
   r('aws-apigw', 'Amazon API Gateway — Developer Guide', 'https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html', 'Docs', '~45 min'),
   r('aws-secrets', 'AWS Secrets Manager — User Guide', 'https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html', 'Docs', '~30 min'),
   // Primary video teachers (one decisive resource per day — see primary.ts)
-  r('codebasics', 'Codebasics — Math, Statistics & ML Tutorials', 'https://www.youtube.com/@codebasics', 'Video', '~20–40 min / video'),
-  r('campusx-ml', 'CampusX — 100 Days of Machine Learning', 'https://www.youtube.com/@campusx-official/playlists', 'Video', '~30–60 min / video'),
-  r('campusx-dl', 'CampusX — 100 Days of Deep Learning', 'https://www.youtube.com/@campusx-official/playlists', 'Video', '~30–60 min / video'),
-  r('campusx-fastapi', 'CampusX — FastAPI for ML & Generative AI', 'https://www.youtube.com/@campusx-official/playlists', 'Video', '~30–60 min / video'),
-  r('campusx-agents', 'CampusX — Agentic AI using LangGraph', 'https://www.youtube.com/@campusx-official/playlists', 'Video', '~30–60 min / video'),
-  r('vizuara', 'Vizuara — Building LLMs / SLMs From Scratch', 'https://www.youtube.com/@vizuara/playlists', 'Video', '~45 min / lecture'),
-  r('abhishek-docker', 'Abhishek Veeramalla — Docker Zero to Hero', 'https://www.youtube.com/@AbhishekVeeramalla/playlists', 'Video', '~30–45 min / video'),
-  r('abhishek-cicd', 'Abhishek Veeramalla — CI/CD (GitHub Actions) Zero to Hero', 'https://www.youtube.com/@AbhishekVeeramalla/playlists', 'Video', '~30–45 min / video'),
-  r('abhishek-aws', 'Abhishek Veeramalla — AWS Zero to Hero', 'https://www.youtube.com/@AbhishekVeeramalla/playlists', 'Video', '~30–45 min / video'),
+  r('codebasics', 'Codebasics — Math, Statistics & ML Tutorials', 'https://www.youtube.com/playlist?list=PLeo1K3hjS3uuKaU2nBDwr6zrSOTzNCs0l', 'Video', '~20–40 min / video'),
+  r('campusx-ml', 'CampusX — 100 Days of Machine Learning', 'https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH', 'Video', '~30–60 min / video'),
+  r('campusx-dl', 'CampusX — 100 Days of Deep Learning', 'https://www.youtube.com/playlist?list=PLKnIA16_RmvYuZauWaPlRTC54KxSNLtNn', 'Video', '~30–60 min / video'),
+  r('campusx-fastapi', 'CampusX — FastAPI for Machine Learning', 'https://www.youtube.com/playlist?list=PLKnIA16_RmvZ41tjbKB2ZnwchfniNsMuQ', 'Video', '~30–60 min / video'),
+  r('campusx-agents', 'CampusX — Agentic AI using LangGraph', 'https://www.youtube.com/playlist?list=PLKnIA16_RmvYsvB8qkUQuJmJNuiCUJFPL', 'Video', '~30–60 min / video'),
+  r('vizuara', 'Vizuara — Build a Small Language Model from Scratch', 'https://www.youtube.com/playlist?list=PLPTV0NXA_ZShuk6u31pgjHjFO2eS9p5EV', 'Video', '~45 min / lecture'),
+  r('abhishek-docker', 'Abhishek Veeramalla — Docker Zero to Hero', 'https://www.youtube.com/playlist?list=PLdpzxOOAlwvLjb0vTD9BXLOwwLD_GWCmC', 'Video', '~30–45 min / video'),
+  r('abhishek-cicd', 'Abhishek Veeramalla — CI/CD Zero to Hero', 'https://www.youtube.com/playlist?list=PLdpzxOOAlwvLUH6ww022l7OZGakJYP9WY', 'Video', '~30–45 min / video'),
+  r('abhishek-aws', 'Abhishek Veeramalla — AWS Zero to Hero', 'https://www.youtube.com/playlist?list=PLdpzxOOAlwvLNOxX0RfndiYSt1Le9azze', 'Video', '~30–45 min / video'),
   r('striver-a2z', 'Striver’s A2Z DSA Sheet (takeUforward)', 'https://takeuforward.org/prep-hub/strivers-a2z-dsa-sheet', 'Practice', '20–45 min / problem'),
 
   // 2026 production topics

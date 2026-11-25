@@ -3,6 +3,7 @@ import { useState, type ReactNode } from 'react';
 import type { Resource } from '../data/types';
 import { TRACKS } from '../data/tracks';
 import type { DayBadge } from '../data/types';
+import type { Link } from '../data/links';
 import type { Status } from '../lib/state';
 
 /** Only allow http(s) links from user/shared data (blocks javascript: URLs in shared snapshots). */
@@ -237,5 +238,33 @@ export function TrackBadge({ track, className }: { track: DayBadge; className?: 
       <span className="h-1.5 w-1.5 rounded-full" style={{ background: t.color }} />
       {t.label}
     </span>
+  );
+}
+
+/** A dedicated day link (Primary or 🇮🇳 Indian Alternative) with optional ⏱ timestamp badge. */
+export function LinkRow({ link, label = 'Open Resource' }: { link: Link; label?: string }) {
+  return (
+    <div className="flex flex-col gap-2 rounded-lg border border-zinc-200 p-3 sm:flex-row sm:items-center dark:border-zinc-800">
+      <div className="min-w-0 flex-1">
+        <div className="text-sm leading-snug font-medium">{link.title}</div>
+        <div className="mt-1 flex flex-wrap items-center gap-1.5">
+          <TypeBadge type={link.type} />
+          {link.badge && (
+            <span className="inline-flex items-center rounded-md bg-amber-100 px-1.5 py-0.5 font-mono text-[11px] font-semibold text-amber-800 dark:bg-amber-500/15 dark:text-amber-300">
+              {link.badge}
+            </span>
+          )}
+          <span className="text-[11px] text-zinc-500">⏱ {link.est}</span>
+        </div>
+      </div>
+      <a
+        href={link.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex h-9 shrink-0 items-center justify-center gap-1 rounded-lg bg-zinc-900 px-3 text-xs font-medium text-white transition hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white"
+      >
+        {label} <ArrowUpRight size={13} />
+      </a>
+    </div>
   );
 }

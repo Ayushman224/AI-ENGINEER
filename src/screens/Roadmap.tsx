@@ -214,22 +214,23 @@ function DaySummary({ n, compact }: { n: number; compact?: boolean }) {
         {task}
       </p>
       <div className="mt-2 flex flex-wrap items-center gap-1.5">
-        {info.res.map(
-          (id) =>
-            RES[id] && (
-              <a
-                key={id}
-                href={RES[id].url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex max-w-full items-center gap-1 rounded-md border border-zinc-200 px-2 py-1 text-[11px] font-medium hover:bg-zinc-100 dark:border-zinc-800 dark:hover:bg-zinc-800"
-              >
-                <span className="truncate">{RES[id].title}</span>
-                <span className="shrink-0 text-zinc-500">· Open Resource</span>
-                <ArrowUpRight size={11} className="shrink-0" />
-              </a>
-            )
-        )}
+        {[
+          { l: info.links.primary, tag: 'Primary' },
+          ...(info.links.alt ? [{ l: info.links.alt, tag: '🇮🇳 Alt' }] : []),
+        ].map(({ l, tag }) => (
+          <a
+            key={tag}
+            href={l.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex max-w-full items-center gap-1 rounded-md border border-zinc-200 px-2 py-1 text-[11px] font-medium hover:bg-zinc-100 dark:border-zinc-800 dark:hover:bg-zinc-800"
+          >
+            <span className="shrink-0 text-zinc-500">{tag}:</span>
+            <span className="truncate">{l.title}</span>
+            {l.badge && <span className="shrink-0 font-mono text-amber-600 dark:text-amber-400">{l.badge.replace('Watch ', '')}</span>}
+            <ArrowUpRight size={11} className="shrink-0" />
+          </a>
+        ))}
         <a href={`#/day/${n}`} className="ml-auto inline-flex items-center gap-1 text-[11px] font-medium text-violet-600 dark:text-violet-400">
           Open day & logbook <ArrowRight size={12} />
         </a>

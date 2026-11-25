@@ -69,21 +69,38 @@ An automated audit of all 280 days (40 weeks × 7) passes with zero gaps. Every 
 
 Per-day content lives in `src/data/weeks*.ts` (Mon–Thu), `src/data/weekly.ts` (Fri/Sat/Sun tasks) and `src/data/extrasA.ts` / `extrasB.ts` (Fri/Sat/Sun reading, weekend questions, daily tips).
 
-## One primary resource per day
+## Daily links: Primary + 🇮🇳 Indian Alternative
 
-Each day shows a single **Open Resource ↗** button, chosen by who teaches that topic best (`src/data/primary.ts`):
+Each day shows a **Primary Resource** and, on 236 of 280 days, a **🇮🇳 Indian Alternative**. The data lives in `src/data/links.ts`.
 
-| Weeks | Primary resource |
-|---|---|
-| 1–2 | Codebasics |
-| 3–5 | CampusX 100 Days of ML / DL |
-| 1–5 (Fri–Sun) | Deep-ML practice |
-| 6–8 | Karpathy Zero to Hero; Vizuara in W7; Raschka's LLMs-from-scratch on Fri–Sun |
-| 9–10 | CampusX FastAPI (backend days), DeepLearning.AI RAG (RAG days) |
-| 11–12, 23–28 | Abhishek Veeramalla (Docker, CI/CD and AWS days, including those Fridays); AI days keep the official vLLM / Langfuse docs |
-| 13–14 | CampusX Agentic AI with LangGraph; Anthropic agent patterns for agent design; official PydanticAI / OpenAI Agents SDK docs on the SDK days |
-| 15–22 | Official OWASP, Unsloth/TRL, Langfuse and Ragas docs |
-| 29–40 | Striver's A2Z DSA (W31–33), NeetCode ML (W35), Chip Huyen's ML Interviews book (the rest); W39 mocks use all three |
+- **No `youtube.com/@channel` links anywhere.** Every video is a specific `watch?v=` URL, and docs, courses and practice sites link to their exact page.
+- **Long lectures are split across days** with a **⏱ Watch start – end** badge and a `&t=…s` URL, so **Open Resource ↗** starts at the right second. Examples:
+
+| Lecture | Where | Slices |
+|---|---|---|
+| Karpathy micrograd | W5 Mon–Wed | 0–50:00 / 50:00–1:40:00 / 1:40:00–2:25:52 |
+| Karpathy GPT-2 (124M) | W8 Mon–Thu + Sat | 45-minute slices, plus the final hour on Saturday |
+| Karpathy GPT Tokenizer | W6 | 3 slices |
+| Karpathy Let's build GPT | W7 Mon–Wed | split on chapter boundaries |
+| TechWorld with Nana Docker | W11 Wed–Thu, W12 Tue–Wed | 4 × 45-minute slices |
+| freeCodeCamp FastAPI Microservices | W9 Sat–Sun | 2 slices |
+| Vizuara Lecture 4 | W7 Mon–Tue | 2 slices |
+
+  Krish Naik's long security and fine-tuning crash courses are also split by their published chapters.
+- **Main teachers:**
+  - 3Blue1Brown and StatQuest, with CampusX Hindi alternatives (W1–4)
+  - Karpathy, with CampusX and Vizuara (W5–8)
+  - FastAPI docs and DeepLearning.AI, with CampusX FastAPI and RAG (W9–10)
+  - Nana, with Abhishek Veeramalla (Docker, W11–12)
+  - Anthropic and LangChain Academy, with CampusX LangGraph and MCP (W13–14)
+  - OWASP, with Krish Naik and Abhishek DevSecOps (W15–16)
+  - Labonne, TRL and Unsloth, with Krish Naik and Codebasics fine-tuning (W17–20)
+  - Eugene Yan, Ragas and Langfuse, with CampusX LLM Evals and Krish Naik (W21–22)
+  - GitHub Actions docs, with Abhishek CI/CD (W23–24)
+  - vLLM docs and AWS Skill Builder, with Vizuara and Abhishek AWS (W25–28)
+  - NeetCode, Deep-ML and Chip Huyen, with Striver's A2Z (W29–40)
+- **Verified:** all 188 YouTube IDs were checked against YouTube (exists, correct creator, and every ⏱ slice inside the real video length), and all 81 non-video URLs return HTTP 200.
+- **No alternative on 44 days.** These are mostly the fine-tuning/DPO, behavioral and portfolio days, where no strong Indian-creator video exists. Those days show only the Primary rather than a forced, weak link.
 
 ## Workflow tools
 

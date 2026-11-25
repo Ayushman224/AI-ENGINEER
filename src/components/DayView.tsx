@@ -15,7 +15,7 @@ import { useStore } from '../lib/store';
 import { CopyReportButton } from './CopyReportButton';
 import { askMentorPrompt, FocusTimer, MentorTips } from './DayTools';
 import { Markdown } from './Markdown';
-import { Badge, Btn, Card, CardHeader, cx, Label, ResourceRow, Reveal, Stars, StatusSelector, statusDot, TrackBadge } from './ui';
+import { Badge, Btn, Card, CardHeader, cx, Label, LinkRow, Reveal, Stars, StatusSelector, statusDot, TrackBadge } from './ui';
 
 export const SLOT_HINT = ['45m concept + 45m practice', '45m concept + 45m practice', '45m concept + 45m practice', '45m concept + 45m practice', '75m strict revision', '3h build · part 1', '3h build · part 2 + report'];
 
@@ -178,13 +178,19 @@ function DayCard({ n, isToday }: { n: number; isToday?: boolean }) {
           </div>
         )}
 
-        {info.res.length > 0 && (
-          <div className="mt-4">
-            <Label hint="opens in a new tab">Primary resource</Label>
-            {RES[info.res[0]] && <ResourceRow r={RES[info.res[0]]} label="Open Resource" />}
-            <RefLinks ids={info.refs} />
+        <div className="mt-4 space-y-3">
+          <div>
+            <Label hint="opens in a new tab">Primary Resource</Label>
+            <LinkRow link={info.links.primary} />
           </div>
-        )}
+          {info.links.alt && (
+            <div>
+              <Label hint="Hindi / Indian creator">🇮🇳 Indian Alternative</Label>
+              <LinkRow link={info.links.alt} />
+            </div>
+          )}
+          <RefLinks ids={info.refs} />
+        </div>
 
         <MentorTips n={n} />
 
