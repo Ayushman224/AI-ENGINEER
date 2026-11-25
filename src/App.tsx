@@ -48,7 +48,7 @@ export default function App() {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2 p-6 text-center text-sm">
         <p>This share link is invalid or truncated.</p>
-        <a className="text-violet-500 underline" href="/">
+        <a className="text-violet-500 underline" href="./">
           Open the tracker
         </a>
       </div>

@@ -82,7 +82,7 @@ export function Layout({ route, children }: { route: Route; children: ReactNode 
         )}
       >
         <div className={cx('flex h-14 items-center gap-2 px-4', collapsed && 'justify-center px-0')}>
-          <img src="/icon.svg" alt="" className="h-7 w-7 rounded-lg" />
+          <img src={`${import.meta.env.BASE_URL}icon.svg`} alt="" className="h-7 w-7 rounded-lg" />
           {!collapsed && (
             <div className="leading-tight">
               <div className="text-sm font-semibold">AI Engineer OS</div>
@@ -135,7 +135,7 @@ export function Layout({ route, children }: { route: Route; children: ReactNode 
         {/* Mobile header */}
         <header className="flex h-12 shrink-0 items-center justify-between border-b border-zinc-200 px-4 lg:hidden dark:border-zinc-800/80">
           <div className="flex items-center gap-2">
-            <img src="/icon.svg" alt="" className="h-6 w-6 rounded-md" />
+            <img src={`${import.meta.env.BASE_URL}icon.svg`} alt="" className="h-6 w-6 rounded-md" />
             <span className="hidden text-sm font-semibold whitespace-nowrap min-[420px]:inline">AI Engineer OS</span>
           </div>
           <div className="flex items-center gap-1">
@@ -165,7 +165,7 @@ export function Layout({ route, children }: { route: Route; children: ReactNode 
             Read-only mentor view — this is a snapshot of someone’s progress. Edits are disabled.{' '}
             <a
               className="underline"
-              href="/"
+              href="./"
               onClick={(e) => {
                 e.preventDefault();
                 sessionStorage.removeItem('aieos:share');

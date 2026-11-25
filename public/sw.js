@@ -1,7 +1,9 @@
 // Network-first service worker: always fresh when online, cached shell when offline.
-const CACHE = 'aieos-v1';
+const CACHE = 'aieos-v2';
+// Resolve shell URLs against the SW scope so this works at / and at sub-paths like /AI-ENGINEER/.
+const at = (p) => new URL(p, self.registration.scope).toString();
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(['/', '/index.html', '/manifest.webmanifest', '/icon.svg'])));
+  e.waitUntil(caches.open(CACHE).then((c) => c.addAll([at('./'), at('index.html'), at('manifest.webmanifest'), at('icon.svg')])));
   self.skipWaiting();
 });
 self.addEventListener('activate', (e) => {
@@ -18,6 +20,6 @@ self.addEventListener('fetch', (e) => {
         caches.open(CACHE).then((c) => c.put(req, copy));
         return res;
       })
-      .catch(() => caches.match(req).then((r) => r || caches.match('/index.html')))
+      .catch(() => caches.match(req).then((r) => r || caches.match(at('index.html'))))
   );
 });
