@@ -6,8 +6,6 @@ export const RESOURCES: Resource[] = [
   // Phase 1 — Math, classical ML, PyTorch, Transformers
   r('3b1b-la', '3Blue1Brown — Essence of Linear Algebra', 'https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab', 'Video', '~3.5 h'),
   r('statquest', 'StatQuest — Machine Learning playlist', 'https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF', 'Video', '10–20 min / video'),
-  r('cs229', 'Stanford CS229 — Machine Learning', 'https://www.youtube.com/watch?v=DATnpGoGhM8', 'Video', '~1.3 h / lecture'),
-  r('fastai', 'Fast.ai — Practical Deep Learning for Coders', 'https://course.fast.ai/', 'Course', '~1.5 h / lesson'),
   r('karpathy', 'Andrej Karpathy — Neural Networks: Zero to Hero', 'https://karpathy.ai/zero-to-hero.html', 'Video', '~2 h / episode'),
   r('alammar', 'Jay Alammar — The Illustrated Transformer', 'https://jalammar.github.io/illustrated-transformer/', 'Article', '~45 min'),
   r('cs336', 'Stanford CS336 — Language Modeling from Scratch', 'https://www.youtube.com/live/JuoVZkPBiKk', 'Video', '~1.3 h / lecture'),
@@ -15,6 +13,10 @@ export const RESOURCES: Resource[] = [
   r('hf-llm', 'Hugging Face — LLM Course', 'https://huggingface.co/huggingface-course', 'Course', '~1 h / section'),
   r('neetcode-ml', 'NeetCode — Machine Learning Practice', 'https://neetcode.io/practice/machine-learning', 'Practice', '20–40 min / problem'),
   r('deepml', 'Deep-ML — ML Coding Practice', 'https://www.deep-ml.com/', 'Practice', '15–30 min / problem'),
+  r('mlcc', 'Google — Machine Learning Crash Course', 'https://developers.google.com/machine-learning/crash-course', 'Course', '~15 h total'),
+  r('3b1b-calc', '3Blue1Brown — Essence of Calculus', 'https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr', 'Video', '~3 h'),
+  r('mml-book', 'Mathematics for Machine Learning (free book)', 'https://mml-book.github.io/', 'Article', 'reference'),
+  r('nn-zero-to-hero', 'Karpathy — nn-zero-to-hero notebooks (GitHub)', 'https://github.com/karpathy/nn-zero-to-hero', 'GitHub', 'code-along'),
   r('numpy', 'NumPy — Absolute Beginners Guide', 'https://numpy.org/doc/stable/user/absolute_beginners.html', 'Docs', '~1 h'),
   r('numpy-quickstart', 'NumPy — Quickstart', 'https://numpy.org/doc/stable/user/quickstart.html', 'Docs', '~1 h'),
   r('pytest', 'pytest — Getting Started', 'https://docs.pytest.org/en/stable/getting-started.html', 'Docs', '~30 min'),
@@ -34,6 +36,8 @@ export const RESOURCES: Resource[] = [
 
   // Phase 3 — Agents, MCP, Security
   r('anthropic-agents', 'Anthropic — Building Effective AI Agents', 'https://www.anthropic.com/research/building-effective-agents', 'Article', '~40 min'),
+  r('anthropic-courses', 'Anthropic — Courses on GitHub (prompting, tool use, evals)', 'https://github.com/anthropics/courses', 'GitHub', '~2 h / course'),
+  r('anthropic-academy', 'Anthropic — Free Courses (Anthropic Academy)', 'https://anthropic.skilljar.com/', 'Course', '~1–2 h / course'),
   r('anthropic-cookbook', 'Anthropic Cookbook — Agent Patterns', 'https://github.com/anthropics/anthropic-cookbook/blob/main/patterns/agents/README.md', 'GitHub', '~2 h'),
   r('lc-academy', 'LangChain Academy — LangGraph & LangSmith', 'https://academy.langchain.com/', 'Course', '~6 h'),
   r('hf-agents', 'Hugging Face — Agents Course', 'https://huggingface.co/agents-course', 'Course', '~1.5 h / unit'),
@@ -79,18 +83,21 @@ export const RESOURCES: Resource[] = [
   r('bedrock-guardrails', 'Amazon Bedrock — Guardrails', 'https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html', 'Docs', '~45 min'),
 
   // Phase 4 — Post-training
+  r('smol-course', 'Hugging Face — smol-course (fine-tuning & alignment)', 'https://huggingface.co/learn/smol-course/unit0/1', 'Course', '~1 h / section'),
   r('labonne', 'Maxime Labonne — LLM Course', 'https://github.com/mlabonne/llm-course', 'GitHub', '~1 h / notebook'),
   r('trl', 'Hugging Face — TRL Documentation', 'https://huggingface.co/docs/trl/en/index', 'Docs', 'reference'),
   r('unsloth', 'Unsloth — Fast LoRA/QLoRA Fine-tuning', 'https://github.com/unslothai/unsloth', 'GitHub', '~1 h / notebook'),
   r('aie-book', 'Chip Huyen — AI Engineering Book Resources', 'https://github.com/chiphuyen/aie-book', 'GitHub', 'reference'),
 
   // Phase 5 — Evals & Observability
+  r('hamel-evals', 'Hamel Husain & Shreya Shankar — AI Evals FAQ', 'https://hamel.dev/blog/posts/evals-faq/', 'Article', '~3 h total'),
+  r('evidently-evals', 'Evidently AI — LLM Evaluations Course', 'https://www.evidentlyai.com/llm-evaluations-course', 'Course', '~3 weeks'),
+  r('madewithml', 'Made With ML — MLOps Course (Goku Mohandas)', 'https://madewithml.com/', 'Course', '~1 h / lesson'),
   r('eugeneyan-evals', 'Eugene Yan — Task-Specific LLM Evals', 'https://eugeneyan.com/writing/evals/', 'Article', '~1 h'),
   r('langfuse', 'Langfuse — Open-Source LLM Observability', 'https://langfuse.com/', 'Docs', '~2 h'),
   r('langfuse-ragas', 'Langfuse + Ragas — Evaluating RAG', 'https://langfuse.com/resources/engineering/evaluation-of-rag-with-ragas', 'Docs', '~1 h'),
   r('ragas', 'Ragas — Documentation', 'https://docs.ragas.io/', 'Docs', 'reference'),
   r('mlops-zoomcamp', 'DataTalksClub — MLOps Zoomcamp', 'https://github.com/DataTalksClub/mlops-zoomcamp', 'GitHub', '~3 h / module'),
-  r('fsdl', 'Full Stack Deep Learning — LLM Bootcamp', 'https://fullstackdeeplearning.com/llm-bootcamp/', 'Course', '~1 h / lecture'),
   r('gh-actions', 'GitHub Actions — Documentation', 'https://docs.github.com/en/actions', 'Docs', 'reference'),
 
   // Phase 6 — AWS, vLLM, System Design
@@ -99,6 +106,7 @@ export const RESOURCES: Resource[] = [
   r('bedrock-kb', 'AWS Samples — Bedrock Managed KB RAG Workshop', 'https://github.com/aws-samples/bedrock-kb-rag-workshop/blob/main/BEDROCK_MANAGED_KB.md', 'GitHub', '~2 h'),
   r('vllm', 'vLLM — Documentation', 'https://docs.vllm.ai/', 'Docs', 'reference'),
   r('openai-vllm', 'OpenAI Cookbook — Running Open Models with vLLM', 'https://github.com/openai/openai-cookbook/blob/main/articles/gpt-oss/run-vllm.md', 'GitHub', '~45 min'),
+  r('cs329s', 'Stanford CS329S — Machine Learning Systems Design (notes)', 'https://stanford-cs329s.github.io/syllabus.html', 'Course', '~1 h / lecture'),
   r('ai-sd', 'AI System Design — Interview Question Bank', 'https://github.com/ombharatiya/ai-system-design-guide/blob/main/00-interview-prep/01-question-bank.md', 'GitHub', 'reference'),
 
   // Phase 7 — Interview blitz

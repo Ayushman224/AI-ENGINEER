@@ -91,6 +91,17 @@ export function Roadmap({ focusWeek }: { focusWeek?: number }) {
                     Phase {p.n} · Weeks {p.weeks[0]}–{p.weeks[1]}
                   </div>
                   <h2 className="leading-snug font-semibold">{p.title}</h2>
+                  <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-xs">
+                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">Spine course:</span>
+                    {p.spine.map((id) =>
+                      RES[id] ? (
+                        <a key={id} href={RES[id].url} target="_blank" rel="noopener noreferrer" className="rounded-md border border-emerald-300/60 bg-emerald-50 px-2 py-0.5 font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300">
+                          {RES[id].title} ↗
+                        </a>
+                      ) : null
+                    )}
+                    <span className="text-zinc-500">— follow it start to finish; everything else is support.</span>
+                  </div>
                   {filter === 'all' && (
                     <>
                       <div className="mt-2 flex flex-wrap gap-1">

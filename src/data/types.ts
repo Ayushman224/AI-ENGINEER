@@ -65,6 +65,7 @@ export interface Phase {
   weeks: [number, number];
   topics: string[];
   resources: string[];
+  spine: string[]; // the 1–2 main courses to follow start to finish in this phase
   color: string;
 }
 

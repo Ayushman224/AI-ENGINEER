@@ -9,37 +9,44 @@ export const PHASES: Phase[] = [
   {
     n: 1, title: 'Math Intuition, Classical ML, PyTorch & Transformers From Scratch', short: 'Foundations', weeks: [1, 8], color: '#a78bfa',
     topics: ['Linear algebra & calculus intuition', 'Probability, MLE & cross-entropy', 'Classical ML & evaluation', 'Backprop & PyTorch', 'Tokenization & embeddings', 'Attention & transformers', 'Modern GPT from scratch'],
-    resources: ['codebasics', 'campusx-ml', 'campusx-dl', 'vizuara', '3b1b-la', 'statquest', 'cs229', 'fastai', 'karpathy', 'alammar', 'cs336', 'raschka', 'hf-llm', 'neetcode-ml', 'deepml'],
+    resources: ['mlcc', '3b1b-la', '3b1b-calc', 'statquest', 'karpathy', 'nn-zero-to-hero', 'raschka', 'alammar', 'cs336', 'mml-book', 'hf-llm', 'campusx-ml', 'campusx-dl', 'vizuara', 'codebasics', 'neetcode-ml', 'deepml'],
+    spine: ['mlcc', 'karpathy'],
   },
   {
     n: 2, title: 'Production Hybrid RAG + FastAPI Backend + Docker Compose', short: 'RAG & Backend', weeks: [9, 12], color: '#60a5fa',
     topics: ['Semantic/structural chunking', 'BM25 + dense hybrid search', 'RRF', 'Cross-encoder reranking', 'Context engineering', 'FastAPI async/await', 'Pydantic', 'SSE streaming', 'Redis caching', 'Postgres + pgvector', 'Multi-stage Dockerfiles', 'Docker Compose'],
-    resources: ['campusx-fastapi', 'abhishek-docker', 'dlai-rag', 'dlai-short', 'llm-zoomcamp', 'applied-llms', 'fastapi', 'nana-docker', 'docker-path'],
+    resources: ['llm-zoomcamp', 'fastapi', 'dlai-rag', 'applied-llms', 'pgvector', 'nana-docker', 'docker-path', 'campusx-fastapi', 'abhishek-docker', 'dlai-short'],
+    spine: ['llm-zoomcamp', 'fastapi'],
   },
   {
     n: 3, title: 'Agentic Workflows, MCP + OWASP AI & Agentic Security', short: 'Agents & Security', weeks: [13, 16], color: '#34d399',
     topics: ['Workflows vs autonomous agents', 'LangGraph state/checkpoints', 'Tool calling', 'Structured outputs', 'MCP clients/servers', 'Human-in-the-loop approvals', 'OWASP LLM & Agentic Top 10', 'PII redaction', 'Excessive agency', 'Vector RBAC/ACLs', 'Docker sandboxing'],
-    resources: ['campusx-agents', 'anthropic-agents', 'anthropic-cookbook', 'lc-academy', 'hf-agents', 'hf-mcp', 'owasp-llm', 'owasp-agentic', 'docker-learn'],
+    resources: ['hf-agents', 'anthropic-agents', 'anthropic-courses', 'anthropic-academy', 'hf-mcp', 'anthropic-cookbook', 'lc-academy', 'owasp-llm', 'owasp-agentic', 'docker-learn', 'campusx-agents'],
+    spine: ['hf-agents', 'anthropic-agents'],
   },
   {
     n: 4, title: 'Post-Training, Fine-Tuning & Alignment', short: 'Fine-Tuning', weeks: [17, 20], color: '#f472b6',
     topics: ['Fine-tune vs RAG', 'Dataset curation', 'Synthetic data', 'SFT', 'LoRA/QLoRA', 'DPO', 'GRPO', 'Quantization (GGUF/AWQ/GPTQ)'],
-    resources: ['labonne', 'trl', 'unsloth', 'aie-book'],
+    resources: ['smol-course', 'labonne', 'unsloth', 'trl', 'aie-book'],
+    spine: ['smol-course', 'labonne'],
   },
   {
     n: 5, title: 'Evals, Observability + GitHub Actions CI/CD', short: 'Evals & CI/CD', weeks: [21, 24], color: '#fbbf24',
     topics: ['Code evaluators', 'LLM-as-a-Judge', 'Ragas: faithfulness, context precision, relevancy', 'Langfuse tracing', 'Prompt versioning', 'Latency/cost dashboards', 'GitHub Actions CI eval gates'],
-    resources: ['abhishek-cicd', 'eugeneyan-evals', 'langfuse', 'langfuse-ragas', 'mlops-zoomcamp', 'fsdl'],
+    resources: ['hamel-evals', 'madewithml', 'eugeneyan-evals', 'evidently-evals', 'langfuse', 'langfuse-ragas', 'gh-actions', 'mlops-zoomcamp', 'abhishek-cicd'],
+    spine: ['hamel-evals', 'madewithml'],
   },
   {
     n: 6, title: 'AWS Cloud Deployment, vLLM Inference & AI System Design', short: 'Cloud & Inference', weeks: [25, 28], color: '#fb923c',
     topics: ['IAM least privilege', 'S3, ECR', 'ECS Fargate / App Runner', 'EC2 GPU instances', 'Amazon Bedrock', 'Secrets Manager, CloudWatch, Billing Alerts', 'vLLM PagedAttention', 'KV cache math', 'TTFT vs ITL', 'Semantic caching', 'Model routing'],
-    resources: ['abhishek-aws', 'aws-essentials', 'aws-genai', 'bedrock-kb', 'vllm', 'openai-vllm', 'ai-sd'],
+    resources: ['vllm', 'aws-genai', 'cs329s', 'aws-essentials', 'bedrock-kb', 'openai-vllm', 'ai-sd', 'abhishek-aws'],
+    spine: ['vllm', 'aws-genai'],
   },
   {
     n: 7, title: 'Portfolio Hardening, Calibration Applications & Interview Blitz', short: 'Portfolio & Interviews', weeks: [29, 40], color: '#22d3ee',
     topics: ['Polish top 3 repos with eval scorecards & load tests', 'Apply at Month 8.5 for calibration', 'Daily NeetCode 150 + ML-from-scratch', '3×/week whiteboard AI system design', 'Mock interviews'],
-    resources: ['striver-a2z', 'neetcode-ml', 'neetcode', 'deepml-timed', 'huyen-interviews'],
+    resources: ['neetcode', 'huyen-interviews', 'deepml-timed', 'neetcode-ml', 'ai-sd', 'striver-a2z'],
+    spine: ['neetcode', 'huyen-interviews'],
   },
 ];
 

@@ -102,6 +102,20 @@ Each day shows a **Primary Resource** and, on 236 of 280 days, a **🇮🇳 Indi
 - **Verified:** all 188 YouTube IDs were checked against YouTube (exists, correct creator, and every ⏱ slice inside the real video length), and all 81 non-video URLs return HTTP 200.
 - **No alternative on 44 days.** These are mostly the fine-tuning/DPO, behavioral and portfolio days, where no strong Indian-creator video exists. Those days show only the Primary rather than a forced, weak link.
 
+## Recommended course (spine per phase)
+
+See **[docs/BEST-FREE-COURSE.md](docs/BEST-FREE-COURSE.md)** for the full review of every resource and the reasoning behind each pick. In short, follow **one spine course per phase** (shown on the Roadmap) and treat everything else as support:
+
+| Phase | Spine |
+|---|---|
+| 1 | Google ML Crash Course, then Karpathy Zero to Hero |
+| 2 | LLM Zoomcamp + FastAPI docs |
+| 3 | Hugging Face Agents Course + Anthropic's "Building Effective Agents" |
+| 4 | Hugging Face smol-course + Labonne |
+| 5 | Hamel & Shreya's AI Evals FAQ + Made With ML |
+| 6 | vLLM docs + AWS GenAI plan |
+| 7 | NeetCode + Chip Huyen |
+
 ## Workflow tools
 
 - **Focus timer** (in each day card): Start / Pause / Reset. It survives refreshes and app switches. **Log Time to Today's Entry** adds the elapsed minutes to Time Taken.
