@@ -149,3 +149,5 @@ The **Cookbooks & Notes** drawer holds 8 reference repos (`src/data/modern.ts`).
 - `src/data/curriculum.ts`: phases, flagship projects; in dev mode it logs any unknown resource ID to the console
 
 Stack: React 18 · TypeScript · Vite · Tailwind CSS v4 · Lucide · Recharts.
+
+<!-- Push test 2026-11-28: confirming commits go out from Ayushman224 -->
