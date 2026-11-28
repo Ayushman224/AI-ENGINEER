@@ -62,7 +62,7 @@ export function Btn({
       className={cx(
         'inline-flex items-center justify-center gap-1.5 rounded-lg font-medium transition disabled:cursor-not-allowed disabled:opacity-50',
         size === 'sm' ? 'h-8 px-2.5 text-xs' : 'h-9 px-3.5 text-sm',
-        variant === 'primary' && 'bg-violet-600 text-white hover:bg-violet-500',
+        variant === 'primary' && 'bg-blue-600 text-white hover:bg-blue-500',
         variant === 'secondary' && 'border border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800',
         variant === 'ghost' && 'text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800/70',
         variant === 'danger' && 'border border-rose-300 text-rose-600 hover:bg-rose-50 dark:border-rose-500/40 dark:text-rose-400 dark:hover:bg-rose-500/10',
